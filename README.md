@@ -5,6 +5,9 @@ that corrects errors in previous console commands.
 
 ![example.gif](https://i.loli.net/2020/01/16/5K8opFnLYrWCqxm.gif)
 
+## Features
+- Automatically correct wrong commands *(Only supports correcting the **unknown command error** now)*
+
 ## Requirements
 
 - Python 3
@@ -45,6 +48,12 @@ Approximate round trip times in milli-seconds:
     Minimum = 0ms, Maximum = 0ms, Average = 0ms
 ```
 You can enter *y* or simply press the enter key to confirm.
+
+## Customize
+To add your own rule, you can add new keywords to the file ```CMDList.db```.
+
+## To-Do
+- [ ] Fix more types of error like **argument errors** and **switch errors**.
 
 ## License
 [The MIT License](https://github.com/zyf722/thedamn/blob/master/LICENSE)
