@@ -4,10 +4,11 @@
 # A magnificent app for Windows CMD, inspired by TheFuck,
 # that corrects errors in previous console commands.
 #--------------------------------------------------------
-# v0.2 1) Renamed keywords.db and some variables
-#      2) New Feature: Now you can choose more candicates
-#      3) Optimize code comments
-# v0.1 First commit
+# v0.2.1 Updated fuzzywuzzy scorer to optimize candicates
+# v0.2   1) Renamed keywords.db and some variables
+#        2) New Feature: More candicates to choose
+#        3) Optimize code comments
+# v0.1   First commit
 #========================================================
 
 
@@ -70,7 +71,7 @@ else:
 
 # Get candicates list
 cmd_keyword = cmd_previous.split(' ')[0]
-cmd_candicates = process.extract(cmd_keyword,cmd_list)
+cmd_candicates = process.extract(cmd_keyword,cmd_list,scorer=fuzz.ratio)
 
 # Use the prime candicate as a default correction
 cmd_candicate_index = 0
