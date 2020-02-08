@@ -1,6 +1,6 @@
-:======================
-: TheDamn Additional Script v0.2
-:======================
+::======================
+:: TheDamn Additional Script v0.2
+::======================
 @echo off
 set DR=%CD%
 cd /d %~dp0
