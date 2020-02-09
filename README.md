@@ -3,7 +3,9 @@
 *The Damn* is a magnificent app for Windows CMD, inspired by [*The Fuck*](https://github.com/nvbn/thefuck),
 that corrects errors in previous console commands.
 
-![example.gif](https://i.loli.net/2020/01/16/5K8opFnLYrWCqxm.gif)
+![example_default.gif](https://i.loli.net/2020/02/09/6TRoUFS7BqtpnJz.gif)
+
+![example_candicates.gif](https://i.loli.net/2020/02/09/gM7VBuTsLzNfR1O.gif)
 
 ## Features
 - Automatically correct wrong commands *(Only supports correcting the **unknown command error** now)*
@@ -52,7 +54,7 @@ Approximate round trip times in milli-seconds:
 You can enter *y* or simply press the enter key to confirm.  
 If you want to choose another candicate, you can enter *c* to change.
 
-## Customize
+## Customization
 To add your own rule, you can add new keywords to the file ```keywords.db```.  
 If you need a file that just contains Windows basic commands or other tools, you can find what you want in the ```Misc``` directory.
 
