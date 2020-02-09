@@ -4,6 +4,7 @@
 # A magnificent app for Windows CMD, inspired by TheFuck,
 # that corrects errors in previous console commands.
 #--------------------------------------------------------
+# v0.2.2 Fixed bugs about reading the previous command
 # v0.2.1 Updated fuzzywuzzy scorer to optimize candicates
 # v0.2   1) Renamed keywords.db and some variables
 #        2) New Feature: More candicates to choose
@@ -62,10 +63,7 @@ for i in range(0,len(cmd_cache)):
 # Get CMD commands and previous command
 cmd_list = ReadCommands()
 if len(cmd_cache) >= 2:
-	for i in range(len(cmd_cache)):
-		if i != "damn":
-			cmd_previous = cmd_cache[-2]
-			break
+	cmd_previous = cmd_cache[-2]
 else:
 	exit(1)
 
