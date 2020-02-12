@@ -17,9 +17,8 @@ print("[+] \033[1;33mTheDamn Installer\033[0m")
 #--------------------------------------------------------
 
 # Install python requirements packages
-print("[+] Install requirements packages...")
-os.system("pip install fuzzywuzzy")
-os.system("pip install python-Levenshtein")
+print("[+] Installing requirements packages...")
+os.system("pip install -r requirements.txt")
 
 # Adding TheDamn directory to PATH
 print("[+] Adding the current directory to PATH...")
