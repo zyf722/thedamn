@@ -1,13 +1,16 @@
 #========================================================
-# TheDamn v0.2
+# TheDamn v0.3
 #--------------------------------------------------------
 # A magnificent app for Windows CMD, inspired by TheFuck,
 # that corrects errors in previous console commands.
 #--------------------------------------------------------
+# v0.3   1) New Feature: check sub-commands like "git clone"
+#        2) Optimize directory structure
+#        3) Now we have a config file
 # v0.2.2 Fixed bugs about reading the previous command
 # v0.2.1 Updated fuzzywuzzy scorer to optimize candicates
 # v0.2   1) Renamed keywords.db and some variables
-#        2) New Feature: More candicates to choose
+#        2) New Feature: Multi-candicates to choose
 #        3) Optimize code comments
 # v0.1   First commit
 #========================================================
@@ -19,7 +22,15 @@
 #--------------------------------------------------------
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-import os
+import os, json
+#========================================================
+
+
+
+#========================================================
+# Load Config
+#--------------------------------------------------------
+config = json.loads(open(os.path.dirname(__file__)+"\\config.json",encoding='utf-8').read())
 #========================================================
 
 
@@ -32,8 +43,12 @@ import os
 ### Read CMD commands from keywords.db
 #--------------------------------------------------------
 def ReadCommands():
-	with open(os.path.dirname(__file__)+"\\keywords.db", "r") as cmd_tempfile:
+	with open(os.path.dirname(__file__)+"\\data\\keywords.db", "r") as cmd_tempfile:
 		cmd_list = cmd_tempfile.readlines()
+	for file in os.listdir(os.path.dirname(__file__)+"\\data\\subcmds"):
+		with open(os.path.dirname(__file__)+"\\data\\subcmds\\"+file, "r") as cmd_tempfile:
+			cmd_sub_list = cmd_tempfile.readlines()
+			cmd_list += [file.split('.')[0]+ " " + c for c in cmd_sub_list]
 	for i in range(0,len(cmd_list)):
 		cmd_list[i] = cmd_list[i].strip('\n')
 	return cmd_list
@@ -67,9 +82,19 @@ if len(cmd_cache) >= 2:
 else:
 	exit(1)
 
-# Get candicates list
-cmd_keyword = cmd_previous.split(' ')[0]
-cmd_candicates = process.extract(cmd_keyword,cmd_list,scorer=fuzz.ratio)
+# Get candicates list and initialize cmd_keyword
+cmd_keyword = ""
+cmd_candicates = []
+
+# Get the cmd_keyword
+for i in range(len(cmd_previous.split(' '))):
+	
+	cmd_keyword += cmd_previous.split(' ')[i]+" "
+	cmd_candicates = process.extract(cmd_keyword,cmd_list,scorer=fuzz.ratio)
+	
+	if cmd_candicates[0][1] != 100:
+		cmd_keyword = cmd_keyword[0:len(cmd_keyword)-1]
+		break
 
 # Use the prime candicate as a default correction
 cmd_candicate_index = 0
@@ -77,16 +102,22 @@ cmd_correct = CorrectCommand(cmd_previous,cmd_keyword,cmd_candicates,cmd_candica
 
 # Wait for confirmation
 while cmd_candicate_index < len(cmd_candicates)-1:
-	print("\n[+] Did you mean: "+"\033[1;33m"+cmd_correct+"\033[0m [\033[1;32my\033[0m/\033[1;33mc\033[0m/\033[1;31mn\033[0m] ", end='')
-	choice = input().lower()
-	if choice == "" or choice == "y":
-		print("")
+	
+	if config["require_confirmation"] == True:
+		print("\n[+] Did you mean: "+"\033[1;33m"+cmd_correct+"\033[0m [\033[1;32my\033[0m/\033[1;33mc\033[0m/\033[1;31mn\033[0m] ", end='')
+		choice = input().lower()
+		if choice == "" or choice == "y":
+			print("")
+			os.system(cmd_correct)
+			break
+		elif choice == "c":
+			cmd_candicate_index += 1
+			cmd_correct = CorrectCommand(cmd_previous,cmd_keyword,cmd_candicates,cmd_candicate_index)
+		elif choice == "n":
+			exit(1)
+	else:
+		print("\n[+] TheDamn Corrected Command: "+"\033[1;33m"+cmd_correct+"\033[0m [\033[1;32my\033[0m/\033[1;33mc\033[0m/\033[1;31mn\033[0m] ", end='')
 		os.system(cmd_correct)
 		break
-	elif choice == "c":
-		cmd_candicate_index += 1
-		cmd_correct = CorrectCommand(cmd_previous,cmd_keyword,cmd_candicates,cmd_candicate_index)
-	elif choice == "n":
-		exit(1)
 
 #========================================================
