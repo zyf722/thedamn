@@ -58,17 +58,18 @@ You can enter *y* or simply press the enter key to confirm.
 
 If you want to choose another candicate, you can enter *c* to change.
 
-If you're not afraid of running corrected commands without confirmation, the ```require_confirmation``` settings option can be set to ```false``` in ```config.json```.
+If you're not afraid of running corrected commands without confirmation, the ```require_confirmation``` option can be set to ```false``` in ```config.json```.
 
 ## Customization
-#### New commands
-To add your own command, you can add new keywords to the file ```keywords.db```.
+### New commands
+To add your own command, you can add new keywords to the file ```data/keywords.db```.
 
-#### New Sub-commands
-If you want to add sub-commands for your new command, you can create a new file named as your command in the ```data/subcmds``` directory, then add sub-commands for it.
+### New Sub-commands
+If you want to add sub-commands for your new command, you can create a new file named as your command in the ```data/subcmds/``` directory, then add sub-commands for it.
 
-It should be like this:
+The folder structure should be like this:
 ```
+thedamn
 │  config.json
 │  damn.bat
 │  damn.py
@@ -91,8 +92,12 @@ It should be like this:
 
 You can refer to the ```git``` command and its sub-commands.
 
-#### Presets
-If you need a file that just contains Windows basic commands or other tools, you can find what you want in the ```presets``` directory.
+### Presets
+If you need a file that just contains Windows basic commands or other tools, you can find what you want in the ```presets``` directory. You can replace ```data/keywords.db``` with them if you want to. (The default ```data/keywords.db``` is the union of the two files in ```presets/```)
+
+### Configuration
+Some of TheDamn settings can be changed in the file ```config.json```:
+- ```require_confirmation``` - requires confirmation before running new command, by default ```true```
 
 ## To-Do
 - [x] Support sub-commands
