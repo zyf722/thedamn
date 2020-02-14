@@ -98,6 +98,7 @@ If you need a file that just contains Windows basic commands or other tools, you
 ### Configuration
 Some of TheDamn settings can be changed in the file ```config.json```:
 - ```require_confirmation``` - requires confirmation before running new command, by default ```true```
+- ```monochrome_mode``` - print output without any color, by default ```false```
 
 ## To-Do
 - [x] Support sub-commands
