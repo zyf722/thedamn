@@ -10,22 +10,22 @@
 import os
 #========================================================
 
-print("[+] \033[1;33mTheDamn Installer\033[0m")
+print("[+] TheDamn Installer")
 
 #========================================================
 # Main Part
 #--------------------------------------------------------
 
 # Install python requirements packages
-print("[+] Installing requirements packages...")
+print("[+] Installing requirements packages...\n")
 os.system("pip install -r requirements.txt")
 
 # Adding TheDamn directory to PATH
-print("[+] Adding the current directory to PATH...")
+print("[+] Adding the current directory to PATH...\n")
 if "TheDamn" not in os.environ["path"]:
 	os.system("wmic ENVIRONMENT where \"name='path' and username='<system>'\" set VariableValue=\"%path%;%CD%\"")
-	print("[!] \033[1;33mDone.\033[0m")
+	print("\n[!] Done.")
 else:
-	print("[!] \033[1;31mYou've already installed TheDamn!\033[0m")
+	print("\n[!] You've already installed TheDamn!")
 	
 #========================================================

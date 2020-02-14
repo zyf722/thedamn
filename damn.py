@@ -4,6 +4,7 @@
 # A magnificent app for Windows CMD, inspired by TheFuck,
 # that corrects errors in previous console commands.
 #--------------------------------------------------------
+# v0.3.1 Fixed bugs about displayed colors
 # v0.3   1) New Feature: check sub-commands like "git clone"
 #        2) Optimize directory structure
 #        3) Now we have a config file
@@ -22,6 +23,7 @@
 #--------------------------------------------------------
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
+from colorama import Fore,Style
 import os, json
 #========================================================
 
@@ -104,20 +106,31 @@ cmd_correct = CorrectCommand(cmd_previous,cmd_keyword,cmd_candicates,cmd_candica
 while cmd_candicate_index < len(cmd_candicates)-1:
 	
 	if config["require_confirmation"] == True:
-		print("\n[+] Did you mean: "+"\033[1;33m"+cmd_correct+"\033[0m [\033[1;32my\033[0m/\033[1;33mc\033[0m/\033[1;31mn\033[0m] ", end='')
+		print(Style.NORMAL+"\n[+] Did you mean: "+Style.BRIGHT+Fore.YELLOW+cmd_correct
+																+Style.NORMAL+Fore.WHITE+"["
+																+Style.BRIGHT+Fore.GREEN+"y"
+																+Style.NORMAL+Fore.WHITE+"/"
+																+Style.BRIGHT+Fore.YELLOW+"c"
+																+Style.NORMAL+Fore.WHITE+"/"
+																+Style.BRIGHT+Fore.RED+"n"
+																+Style.NORMAL+Fore.WHITE+"]"
+		, end='')
 		choice = input().lower()
 		if choice == "" or choice == "y":
 			print("")
 			os.system(cmd_correct)
+			print(Style.RESET_ALL)
 			break
 		elif choice == "c":
 			cmd_candicate_index += 1
 			cmd_correct = CorrectCommand(cmd_previous,cmd_keyword,cmd_candicates,cmd_candicate_index)
 		elif choice == "n":
+			print(Style.RESET_ALL)
 			exit(1)
 	else:
-		print("\n[+] TheDamn Corrected Command: "+"\033[1;33m"+cmd_correct+"\033[0m [\033[1;32my\033[0m/\033[1;33mc\033[0m/\033[1;31mn\033[0m] ", end='')
+		print("\n[+] TheDamn Corrected Command: "+Style.BRIGHT+Fore.YELLOW+cmd_correct, end='')
 		os.system(cmd_correct)
+		print(Style.RESET_ALL)
 		break
 
 #========================================================
