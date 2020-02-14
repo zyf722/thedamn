@@ -117,27 +117,27 @@ while cmd_candicate_index < len(cmd_candicates)-1:
 																	+Style.BRIGHT+Fore.RED+"n"
 																	+Style.NORMAL+Fore.WHITE+"] "
 			, end='')
+			print(Style.RESET_ALL)
 		else:
-			print(Style.NORMAL+"\n[+] Did you mean: "+cmd_correct+" [y/c/n] ", end='')
+			print("\n[+] Did you mean: "+cmd_correct+" [y/c/n] ", end='')
 		choice = input().lower()
 		if choice == "" or choice == "y":
 			print("")
 			os.system(cmd_correct)
-			print(Style.RESET_ALL)
 			break
 		elif choice == "c":
 			cmd_candicate_index += 1
 			cmd_correct = CorrectCommand(cmd_previous,cmd_keyword,cmd_candicates,cmd_candicate_index)
 		elif choice == "n":
-			print(Style.RESET_ALL)
+			
 			exit(1)
 	else:
 		if config["monochrome_mode"] == False:
 			print("\n[+] TheDamn Corrected Command: "+Style.BRIGHT+Fore.YELLOW+cmd_correct)
+			print(Style.RESET_ALL)
 		else:
 			print("\n[+] TheDamn Corrected Command: "+cmd_correct)
 		os.system(cmd_correct)
-		print(Style.RESET_ALL)
 		break
 
 #========================================================
