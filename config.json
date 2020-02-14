@@ -1,1 +1,4 @@
-{"require_confirmation": true}
+{
+	"require_confirmation": true,
+	"monochrome_mode": false
+}
