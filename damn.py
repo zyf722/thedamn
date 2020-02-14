@@ -4,7 +4,8 @@
 # A magnificent app for Windows CMD, inspired by TheFuck,
 # that corrects errors in previous console commands.
 #--------------------------------------------------------
-# v0.3.1 Fixed bugs about displayed colors
+# v0.3.2 Add new option for monochrome output
+# v0.3.1 Fixed bugs about output colors
 # v0.3   1) New Feature: check sub-commands like "git clone"
 #        2) Optimize directory structure
 #        3) Now we have a config file
@@ -106,15 +107,18 @@ cmd_correct = CorrectCommand(cmd_previous,cmd_keyword,cmd_candicates,cmd_candica
 while cmd_candicate_index < len(cmd_candicates)-1:
 	
 	if config["require_confirmation"] == True:
-		print(Style.NORMAL+"\n[+] Did you mean: "+Style.BRIGHT+Fore.YELLOW+cmd_correct
-																+Style.NORMAL+Fore.WHITE+"["
-																+Style.BRIGHT+Fore.GREEN+"y"
-																+Style.NORMAL+Fore.WHITE+"/"
-																+Style.BRIGHT+Fore.YELLOW+"c"
-																+Style.NORMAL+Fore.WHITE+"/"
-																+Style.BRIGHT+Fore.RED+"n"
-																+Style.NORMAL+Fore.WHITE+"]"
-		, end='')
+		if config["monochrome_mode"] == False:
+			print(Style.NORMAL+"\n[+] Did you mean: "+Style.BRIGHT+Fore.YELLOW+cmd_correct
+																	+Style.NORMAL+Fore.WHITE+" ["
+																	+Style.BRIGHT+Fore.GREEN+"y"
+																	+Style.NORMAL+Fore.WHITE+"/"
+																	+Style.BRIGHT+Fore.YELLOW+"c"
+																	+Style.NORMAL+Fore.WHITE+"/"
+																	+Style.BRIGHT+Fore.RED+"n"
+																	+Style.NORMAL+Fore.WHITE+"] "
+			, end='')
+		else:
+			print(Style.NORMAL+"\n[+] Did you mean: "+cmd_correct+" [y/c/n] ", end='')
 		choice = input().lower()
 		if choice == "" or choice == "y":
 			print("")
@@ -128,7 +132,10 @@ while cmd_candicate_index < len(cmd_candicates)-1:
 			print(Style.RESET_ALL)
 			exit(1)
 	else:
-		print("\n[+] TheDamn Corrected Command: "+Style.BRIGHT+Fore.YELLOW+cmd_correct, end='')
+		if config["monochrome_mode"] == False:
+			print("\n[+] TheDamn Corrected Command: "+Style.BRIGHT+Fore.YELLOW+cmd_correct)
+		else:
+			print("\n[+] TheDamn Corrected Command: "+cmd_correct)
 		os.system(cmd_correct)
 		print(Style.RESET_ALL)
 		break
