@@ -4,6 +4,7 @@
 # A magnificent app for Windows CMD, inspired by TheFuck,
 # that corrects errors in previous console commands.
 #--------------------------------------------------------
+# v0.3.3 Color display bug fixed (Credit: blackpancake)
 # v0.3.2 Add new option for monochrome output
 # v0.3.1 Fixed bugs about output colors
 # v0.3   1) New Feature: check sub-commands like "git clone"
@@ -24,7 +25,7 @@
 #--------------------------------------------------------
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-from colorama import Fore,Style
+from colorama import Fore,Style,init
 import os, json
 #========================================================
 
@@ -36,7 +37,10 @@ import os, json
 config = json.loads(open(os.path.dirname(__file__)+"\\config.json",encoding='utf-8').read())
 #========================================================
 
-
+#========================================================
+# Reset Colorama
+#--------------------------------------------------------
+init(autoreset=True)
 
 #========================================================
 # Define methods

@@ -20,6 +20,7 @@ that corrects errors in previous console commands.
 - pip
 - fuzzywuzzy
 - python-Levenshtein
+- colorama
 
 ## Installation
 ```
